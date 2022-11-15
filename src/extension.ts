@@ -40,13 +40,10 @@ export function activate(context: vscode.ExtensionContext) {
 		
 		let preInsertText = `\n.${word}\n  \n`;
 		const index = currentContent.indexOf('</style>');
-		await insertFn(editor.document.positionAt(index), preInsertText);
-		await vscode.commands.executeCommand('cursorMove');
-
-		// editor.edit((editBuilder) => {
-		// 	editBuilder.insert(new vscode.Position(content.length, 0), insertText);
-		// 	// TODO: focus on the new line
-		// });
+		const newPosition = editor.document.positionAt(index);
+		await insertFn(newPosition, preInsertText);
+		const caretPosition = new vscode.Position(newPosition.line + 2, 2);
+		editor.selections = [new vscode.Selection(caretPosition, caretPosition)];
 	});
 
 	context.subscriptions.push(disposable);
