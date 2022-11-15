@@ -10,14 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:stylus-assist.helloWorld"
+    "onCommand:stylus-assist.insertClass"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "stylus-assist.helloWorld",
-        "title": "Hello World"
+        "command": "stylus-assist.insertClass",
+        "title": "insertClass"
       }
     ]
   },
