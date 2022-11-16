@@ -8,6 +8,7 @@ const insertFn = (p: vscode.Position, str: string) => new Promise(resolve => {
 		setTimeout(() => resolve(true));
 	});
 });
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -19,10 +20,14 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('stylus-assist.insertClass', async () => {
+	const insertClassAction = async () => {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		// vscode.window.showInformationMessage('Hello World from stylus-assist!');
+		console.log('insertClassAction run!');
+		if (!vscode.window.activeTextEditor) {
+			return;
+		}
 		const editor = vscode.window.activeTextEditor!;
 		const range = editor.document.getWordRangeAtPosition(editor.selection.active);
 		const word = editor.document.getText(range);
@@ -30,24 +35,24 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const content = editor.document.getText();
 		const result = /<style[\s\S]*>([\s\S]*?)<\/style>/.exec(content);
-		
-		if(!result) {
+
+		if (!result) {
 			await insertFn(editor.document.positionAt(content.length), '<style lang="stylus">\n</style>\n');
 			await editor.document.save();
 		}
 
 		const currentContent = editor.document.getText();
-		
+
 		let preInsertText = `\n.${word}\n  \n`;
 		const index = currentContent.indexOf('</style>');
 		const newPosition = editor.document.positionAt(index);
 		await insertFn(newPosition, preInsertText);
 		const caretPosition = new vscode.Position(newPosition.line + 2, 2);
 		editor.selections = [new vscode.Selection(caretPosition, caretPosition)];
-	});
-
-	context.subscriptions.push(disposable);
+		editor.revealRange(new vscode.Range(caretPosition, caretPosition), vscode.TextEditorRevealType.InCenter);
+	};
+	vscode.commands.registerCommand('stylus-assist.insertClass', insertClassAction);
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

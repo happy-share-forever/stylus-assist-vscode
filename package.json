@@ -19,6 +19,12 @@
         "command": "stylus-assist.insertClass",
         "title": "insertClass"
       }
+    ],
+    "keybindings":[
+      {
+        "command": "stylus-assist.insertClass",
+        "key": "cmd+[Backslash]"
+      }
     ]
   },
   "scripts": {
