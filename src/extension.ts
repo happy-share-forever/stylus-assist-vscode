@@ -8,7 +8,8 @@ const insertFn = (p: vscode.Position, str: string) => new Promise(resolve => {
 		setTimeout(() => resolve(true));
 	});
 });
-
+const before2CharCheckList: string[] = ['="', ', ', '"['];
+const before2CharCheckInClassArr: string[] = [', ', '"['];
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -29,9 +30,26 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		const editor = vscode.window.activeTextEditor!;
+		const activePosition = editor.selection.active;
+		const before2Char = editor.document.getText(new vscode.Range(new vscode.Position(activePosition.line, activePosition.character - 2), activePosition));
+		const after1Char = editor.document.getText(new vscode.Range(activePosition, new vscode.Position(activePosition.line, activePosition.character + 1)));
+		console.log('before2Char', before2Char);
+		// 自动插入 $style.
+		if (before2CharCheckList.includes(before2Char)) {
+			let insertContent = '$style.';
+			// 数组情况特殊处理
+			if (before2CharCheckInClassArr.includes(before2Char) && after1Char !== ']') {
+				insertContent += ', ';
+			}
+			await insertFn(activePosition, insertContent);
+			await editor.document.save();
+			const caretPosition = new vscode.Position(activePosition.line, activePosition.character + 7);
+			editor.selections = [new vscode.Selection(caretPosition, caretPosition)];
+			return;
+		}
 		const range = editor.document.getWordRangeAtPosition(editor.selection.active);
 		const word = editor.document.getText(range);
-		if (!word) { return; };
+		if (!word || word.length > 50) { return; };
 
 		const content = editor.document.getText();
 		const result = /<style[\s\S]*>([\s\S]*?)<\/style>/.exec(content);
