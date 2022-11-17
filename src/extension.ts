@@ -16,7 +16,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "stylus-assist" is now active!');
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
@@ -25,7 +24,6 @@ export function activate(context: vscode.ExtensionContext) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		// vscode.window.showInformationMessage('Hello World from stylus-assist!');
-		console.log('insertClassAction run!');
 		if (!vscode.window.activeTextEditor) {
 			return;
 		}
@@ -33,7 +31,6 @@ export function activate(context: vscode.ExtensionContext) {
 		const activePosition = editor.selection.active;
 		const before2Char = editor.document.getText(new vscode.Range(new vscode.Position(activePosition.line, activePosition.character - 2), activePosition));
 		const after1Char = editor.document.getText(new vscode.Range(activePosition, new vscode.Position(activePosition.line, activePosition.character + 1)));
-		console.log('before2Char', before2Char);
 		// 自动插入 $style.
 		if (before2CharCheckList.includes(before2Char)) {
 			let insertContent = '$style.';
