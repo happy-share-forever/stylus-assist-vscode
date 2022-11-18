@@ -3,10 +3,15 @@
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 6,
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "@typescript-eslint"
+    ],
+    "extends": [
+        "plugin:@typescript-eslint/eslint-recommended",
+        "standard-with-typescript"
     ],
     "rules": {
         "@typescript-eslint/naming-convention": "warn",
@@ -14,7 +19,12 @@
         "curly": "warn",
         "eqeqeq": "warn",
         "no-throw-literal": "warn",
-        "semi": "off"
+        "semi": "off",
+        "@typescript-eslint/promise-function-async": 0,
+        "@typescript-eslint/strict-boolean-expressions": 0,
+        "@typescript-eslint/restrict-template-expressions": 0,
+        "@typescript-eslint/prefer-includes": 0,
+        "@typescript-eslint/consistent-type-definitions": 0
     },
     "ignorePatterns": [
         "out",

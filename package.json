@@ -13,7 +13,8 @@
     "url": "https://github.com/happy-share-forever/stylus-assist-vscode"
   },
   "activationEvents": [
-    "onCommand:stylus-assist.insertClass"
+    "onCommand:stylus-assist.insertClass",
+    "onCommand:stylus-assist.insertCss"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -21,12 +22,20 @@
       {
         "command": "stylus-assist.insertClass",
         "title": "insertClass"
+      },
+      {
+        "command": "stylus-assist.insertCss",
+        "title": "insertCss"
       }
     ],
-    "keybindings":[
+    "keybindings": [
       {
         "command": "stylus-assist.insertClass",
         "key": "cmd+[Backslash]"
+      },
+      {
+        "command": "stylus-assist.insertCss",
+        "key": "cmd+alt+[Backslash]"
       }
     ]
   },
@@ -42,19 +51,24 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.54.0",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^10.0.0",
     "@types/node": "16.x",
+    "@types/vscode": "^1.54.0",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
+    "@vscode/test-electron": "^2.2.0",
     "eslint": "^8.26.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-promise": "^6.1.1",
     "glob": "^8.0.3",
     "mocha": "^10.1.0",
-    "typescript": "^4.8.4",
     "ts-loader": "^9.4.1",
+    "typescript": "4.8.4",
     "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "@vscode/test-electron": "^2.2.0"
+    "webpack-cli": "^4.10.0"
   }
 }
