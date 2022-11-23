@@ -1,3 +1,6 @@
+import * as vscode from 'vscode'
+import { insertFn } from './utils'
+
 const formatCode: Function = (codeText: string, space: string): string => {
   // 去除分号
   const text = codeText.replace(/;/g, '')
@@ -30,4 +33,13 @@ const formatCode: Function = (codeText: string, space: string): string => {
 
 export const insertCss = async (): Promise<any> => {
   console.log('insertCss')
+  const activePosition = vscode.window.activeTextEditor?.selection.active
+  if (!activePosition) return
+  const space = ' '.repeat(activePosition.character)
+  const text = await vscode.env.clipboard.readText()
+  if (text) {
+    const result = formatCode(text, space)
+    console.log(result)
+    await insertFn(activePosition, result)
+  }
 }

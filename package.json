@@ -2,7 +2,7 @@
   "name": "stylus-assist",
   "displayName": "stylus-assist",
   "description": " supercharged",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "engines": {
     "vscode": "^1.54.0"
   },
@@ -35,7 +35,7 @@
       },
       {
         "command": "stylus-assist.insertCss",
-        "key": "cmd+alt+[Backslash]"
+        "key": "ctrl+alt+v"
       }
     ]
   },
