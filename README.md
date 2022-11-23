@@ -15,5 +15,5 @@
 
 ## Release Notes
 
--
+* 0.0.4 insertClass 版本
 
